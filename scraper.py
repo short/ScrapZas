@@ -3,8 +3,9 @@ import urllib
 import bs4script
 import scrapyscript
 
+
 def main():
-    print("main executed")
+    print("test")
 
 
 if __name__ == "__main__":
