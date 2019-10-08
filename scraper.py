@@ -1,3 +1,5 @@
+import requests
+
 def main():
     print("main executed")
 
