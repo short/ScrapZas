@@ -55,5 +55,3 @@ class Worker:
                 pass
 
 
-if __name__ == "__main__":
-    crawl("https://nu.nl")
