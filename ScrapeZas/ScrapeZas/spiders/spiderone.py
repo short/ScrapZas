@@ -4,24 +4,23 @@ import scrapy
 
 class SpideroneSpider(scrapy.Spider):
     name = 'spiderone'
-    allowed_domains = ['www.reddit.com/r/gameofthrones/']
-    start_urls = ['http://www.reddit.com/r/gameofthrones/']
+    allowed_domains = ['www.nu.nl']
+    start_urls = ['https://www.nu.nl/']
+
+    custom_settings = {
+        'FEED_URI': 'tmp/test.csv'
+    }
 
     def parse(self, response):
         # Extracting the content using css selectors
-        titles = response.css('.title.may-blank::text').extract()
-        votes = response.css('.score.unvoted::text').extract()
-        times = response.css('time::attr(title)').extract()
-        comments = response.css('.comments::text').extract()
+
+        content = response.css('.column-content').extract()
 
         # Give the extracted content row wise
-        for item in zip(titles, votes, times, comments):
+        for item in zip(content):
             # create a dictionary to store the scraped info
             scraped_info = {
-                'title': item[0],
-                'vote': item[1],
-                'created_at': item[2],
-                'comments': item[3],
+                'content': item[0]
             }
 
             # yield or give the scraped info to scrapy
