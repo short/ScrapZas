@@ -13,7 +13,7 @@ keywordlist = ["utrecht", "softdrugs", "harddrugs", "hasj", "xtc", "mdma", "MDMA
             "assie", "coke", "wit", "liter", "kilo", "k", "shop", "naalden", "smartshop", "smart shop", "magic",
             "mushrooms", "locatie", "sell", "buy", "kopen", "verkopen", "puurc24", "bokser101232@gmail.com", "31686465870", "Fdelivery", "Fdelivery@protonmail.com",
             "2CB", "utrechtdeliver", "Highline1", "whitemarket", "Partysquad19", "0685036987", "gedrukt", "stuk", "mropium", "Ketamine",
-            "kristallen", "jasper030"]
+            "kristallen", "jasper030" ]
 
 
 
