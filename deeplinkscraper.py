@@ -35,7 +35,7 @@ class Worker:
     def work(self):
         for link in self.queue:
 
-            if ".jpg" or ".JPG" or ".JPEG" or ".png" or ".PNG" not in link:
+            if (".jpg" not in link) and (".png" not in link):
                 try:
                     page = urlopen(link)
                     soup = BeautifulSoup(page, 'lxml')

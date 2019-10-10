@@ -5,6 +5,8 @@ import scrapyscript
 import deeplinkscraper
 
 
+def main():
+    deeplinkscraper.crawl("https://www.nu.nl/")
 
 
 if __name__ == "__main__":
