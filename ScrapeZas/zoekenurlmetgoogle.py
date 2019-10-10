@@ -25,8 +25,8 @@ for woorden in range(len(keywordlist)):
                     query = b + ' ' + str(keywordlist[woorden])
                     print(query)
 
-                    with open('paginalijst', 'w+') as paginalijst:
-                        for j in search(str(query), tld='nl', stop=None, pause=11):
+                    with open('../paginalijst.txt', 'w+') as paginalijst:
+                        for j in search(str(query), tld='nl', stop=None, pause=15):
                             a = j.split()
                             for items in range(len(a)):
                                 print(a[items] + '\n')

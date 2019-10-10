@@ -315,3 +315,8 @@ https://www.nu.nl/achterklap
 https://www.nu.nl/film
 https://www.twitter.com/NUnl
 https://www.nu.nl/entertainment
+https://www.nu.nl/entertainment
+https://www.nu.nl/videos
+https://www.nu.nl/entertainment
+https://www.nu.nl/achterklap
+https://www.nu.nl/film
