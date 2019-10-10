@@ -26,3 +26,4 @@ class SpideroneSpider(scrapy.Spider):
 
             # yield or give the scraped info to scrapy
             yield scraped_info
+
