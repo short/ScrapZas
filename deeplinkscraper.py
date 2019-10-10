@@ -40,7 +40,7 @@ class Worker:
                     page = urlopen(link)
                     soup = BeautifulSoup(page, 'lxml')
 
-                    self.write_file("dump.txt", soup.text)
+                    # self.write_file("dump.txt", soup.text)
                     self.write_file("log.txt", link + "\n")
                     self.report(link)
                     self.crawled.add(link)

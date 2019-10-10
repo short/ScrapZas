@@ -1,12 +1,15 @@
-import requests
-import urllib
-import bs4script
-import scrapyscript
 import deeplinkscraper
-
+from collections import Counter
 
 def main():
-    deeplinkscraper.crawl("https://www.nu.nl/")
+    with open("paginalijst.txt", 'r') as file:
+        urllist = list()
+        for link in file:
+            urllist.append(link)
+
+        for item in urllist:
+            print("nieuwe zoekterm" + item)
+            deeplinkscraper.crawl(item)
 
 
 if __name__ == "__main__":
