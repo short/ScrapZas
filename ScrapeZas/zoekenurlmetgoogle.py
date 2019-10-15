@@ -14,22 +14,20 @@ keywordlist = ["utrecht", "softdrugs", "harddrugs", "hasj", "xtc", "mdma", "MDMA
             "kristallen", "jasper030"]
 
 
-
-for woorden in range(len(keywordlist)):
-    a = keywordlist[25 + woorden]
-    for woorden in range(len(keywordlist)):
-        if keywordlist[woorden] != a:
-            b = a + ' ' + str(keywordlist[woorden])
-            for woorden in range(len(keywordlist)):
-                if keywordlist[woorden] != a:
-                    query = b + ' ' + str(keywordlist[woorden])
-                    print(query)
-
-                    with open('../paginalijst.txt', 'w+') as paginalijst:
-                        for j in search(str(query), tld='nl', stop=None, pause=15):
-                            a = j.split()
-                            for items in range(len(a)):
-                                print(a[items] + '\n')
-                                paginalijst.write(str(a[items] + '\n'))
-        else:
-            query = a
+with open('../paginalijst.txt', 'w+') as paginalijst:
+	for woorden in range(len(keywordlist)):
+	    a = keywordlist[50 + woorden]
+	    for woorden in range(len(keywordlist)):
+	        if keywordlist[woorden] != a:
+	            b = a + ' ' + str(keywordlist[woorden])
+	            for woorden in range(len(keywordlist)):
+	                if keywordlist[woorden] != a:
+	                    query = b + ' ' + str(keywordlist[woorden])
+	                    print(query)
+	                        for j in search(str(query), tld='nl', stop=None, pause=20):
+	                            a = j.split()
+	                            for items in range(len(a)):
+	                                print(a[items] + '\n')
+	                                paginalijst.write(str(a[items] + '\n'))
+	        else:
+	            query = a
