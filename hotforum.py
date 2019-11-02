@@ -32,13 +32,6 @@ def getpageinfo(a):
     for li in soup.find_all(class_="onderwerp"):
         print(li)
 
-def sendtelegrammessage(text):
-    # hier de token van de botfather
-    bot = telegram.Bot(token='922384015:AAG_HOGyp_857rdcHJ8Wf7GsdQKVDeejwx4')
-
-    bot.sendMessage(chat_id=-1001247505334, text=text)
-
-
 def test():
     url = 'https://www.hotforum.nl/forum/index.php?name=Drugsinc&'
     payload = {
@@ -55,29 +48,14 @@ def test():
         "Cookie": "PHPSESSID=9he8o8mb1p32r302r9j1n5t8q7",
         "Upgrade-Insecure-Requests": 1
     }
+    p = {"accept": "true"
+         }
+
     # Adding empty header as parameters are being sent in payload
-    headers = {}
-    requests.post(url, data=json.dumps(payload), headers=headers)
+    test = requests.post(url, p)
+    print(test)
+    print('werkt')
     getpageinfo('https://www.hotforum.nl/forum/Drugsinc')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
