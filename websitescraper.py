@@ -4,6 +4,8 @@ import time
 import csv
 from os import path
 import codecs
+import datetime
+import hashlib
 
 
 class WebScraper:
@@ -55,7 +57,9 @@ class WebScraper:
     @staticmethod
     def write_to_doc(self, content_file, url):
         file = 'websites.csv'
-        new_row = [url, content_file]
+        time_scraped = datetime.datetime.now()
+        md5_hash = hashlib.md5(content_file.encode('utf-8')).hexdigest()
+        new_row = [url, content_file, time_scraped, md5_hash]
         print('weg schrijven van informatie')
         if path.exists(file):                                       #controleert of bestand al bestaat of niet
             with codecs.open(file, 'a', 'utf-8') as f:
@@ -65,7 +69,7 @@ class WebScraper:
         else:
             with codecs.open(file, 'w', 'utf-8') as f:              #creëert nieuw bestand en maakt header row aan
                 writer = csv.writer(f)                              #voegt hierbij ook nieuwe text van html pagina toe
-                writer.writerow(['Website', 'Text'])
+                writer.writerow(['Website', 'Text', "Time scraped", "Hash"])
                 writer.writerow(new_row)
                 print('nieuw bestand aanmaken')
 
@@ -85,6 +89,7 @@ class WebScraper:
     def run_scraper(self):
         scraper1.read_file()
         scraper1.get_all_html()
+
 
 scraper1 = WebScraper('log.txt')    #aanmaken van scraper
 scraper1.run_scraper(scraper1)      #laat de scraper de geselecteerde txt file URLs scrapen

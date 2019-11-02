@@ -1,6 +1,7 @@
 import deeplinkscraper
 from collections import Counter
 
+
 def main():
     with open("paginalijst.txt", 'r') as file:
         urllist = list()
