@@ -22,6 +22,7 @@ def getpageinfo(a, session):
     scrape = session.get(a, headers=headers)
     websitecontent = scrape.content
     soup = BeautifulSoup(websitecontent, "html.parser")
+    # print(soup)
 
     for li in soup.find_all(class_="onderwerp"):
         print(li)
