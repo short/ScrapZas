@@ -46,13 +46,17 @@ def test():
         "Accept-Encoding": "gzip,deflate,br",
         "Accept-Language": "nl,en-US;q=0.7,en;q=0.3",
         "Cookie": "PHPSESSID=9he8o8mb1p32r302r9j1n5t8q7",
-        "Upgrade-Insecure-Requests": 1
+        "Upgrade-Insecure-Requests": 1,
+        "accept": "true"
     }
+
+
     p = {"accept": "true"
-         }
+    }
+
 
     # Adding empty header as parameters are being sent in payload
-    test = requests.post(url, p)
+    test = requests.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', data=payload)
     print(test)
     print('werkt')
     getpageinfo('https://www.hotforum.nl/forum/Drugsinc')
