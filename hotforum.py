@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import telegram
 import time
 import re
 import json
@@ -28,9 +27,10 @@ def getpageinfo(a):
     scrape = requests.get(a, headers=headers)
     websitecontent = scrape.content
     soup = BeautifulSoup(websitecontent, "html.parser")
+    print(soup)
 
     for li in soup.find_all(class_="onderwerp"):
-        print(li)
+        print()
 
 def test():
     url = 'https://www.hotforum.nl/forum/index.php?name=Drugsinc&'
@@ -56,8 +56,7 @@ def test():
 
 
     # Adding empty header as parameters are being sent in payload
-    test = requests.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', data=payload)
-    print(test)
+    requests.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', data=p)
     print('werkt')
     getpageinfo('https://www.hotforum.nl/forum/Drugsinc')
 
