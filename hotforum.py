@@ -2,6 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import time
+from os import path
+import codecs
+import csv
+import pandas as pd
 
 forumlink = "https://www.hotforum.nl/forum-overzicht/Business+en+Finance"
 #geef hier je max bedrag op
@@ -36,7 +40,7 @@ def getuserlink():
 
         for li in soup.find_all(class_="Visit"):
             print(li.a.get('href'))
-            getpageinfo(li.a.get('href'), session)
+            #getpageinfo(li.a.get('href'))
 
 def getaantalonderliggendepaginas(a):
     test = session.get(a, headers=headers)
@@ -76,20 +80,41 @@ def getpageinfo(a):
 
 
 def leeghalenvanforum(a):
-    scrape = session.get(a, headers=headers)
-    websitecontent = scrape.content
-    soup = BeautifulSoup(websitecontent, "html.parser")
+    #hierzo zorgen we ervoor dat we ook de onderliggende pagina's pakken
+    for items in range(1000):
 
-    table_body = soup.find('tbody')
-    rows = table_body.find_all('tr')
-    for row in rows:
-        test = row.find_all('td', {"class": "onderwerp"})
-        cols = test + row.find_all('td', {"class": "onderwerp2"})
-        cols = [x.text.strip() for x in cols]
-        print(cols)
+        print(a)
+        print(str(items + 1))
+        link = a + str(items + 1) + '/'
+        print(link)
+        scrape = session.get(link, headers=headers)
+        websitecontent = scrape.content
+        soup = BeautifulSoup(websitecontent, "html.parser")
+
+        #deze counter wordt gebruikt om alleen de 30 nuttige usernames + het bericht eraf te halen
+        counter = 0
+        table_body = soup.find('tbody')
+        rows = table_body.find_all('tr')
+        for row in rows:
+            #time.sleep(1)
+            test = row.find_all('td', {"class": "border"})
+            cols = test + row.find_all('td')
+            cols = [x.text.strip() for x in cols]
+            counter = counter + 1
+            if counter > 6 and counter < 36:
+                print(cols)
+            elif counter > 38:
+                counter = 0
+
+
+def write_to_doc(berichten):
+    with open('hotforuminfo.csv', 'w') as csvfile:
+        print()
 
 
 
-leeghalenvanforum('https://www.hotforum.nl/forum/Drugsinc/1113179/wickr-sneldenken5555-best-qualty-247/')
+#write_to_doc(['Sgd', '29-10-19 17:46\n\nLkker'])
+#getpageinfo('https://www.hotforum.nl/forum/Drugsinc/')
+leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
 #getuserlink()
 #getaantalonderliggendepaginas('https://www.hotforum.nl/forum/Drugsinc/')
