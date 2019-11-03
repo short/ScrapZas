@@ -83,7 +83,7 @@ def leeghalenvanforum(a):
     teller= 0
     while doorgaan == 1:
         teller = teller + 1
-        link = a + str(teller) + '/'
+        link = a + '/' + str(teller)
         print(link)
         scrape = session.get(link, headers=headers)
         websitecontent = scrape.content
@@ -106,14 +106,12 @@ def leeghalenvanforum(a):
                 #print(extra)
                 print(len(extra))
                 if len(extra) == 2:
-                    print("jahoor")
                     doorgaan = 0
             elif counter > 38:
                 counter = 0
                 if len(extra) == 2:
-                    print("jahoor")
                     doorgaan = 0
-    print("lekkerstoppen")
+
 
 
 def write_to_doc(bericht):
@@ -134,5 +132,5 @@ def write_to_doc(bericht):
 
 
 
-#getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
-leeghalenvanforum('https://www.hotforum.nl/forum/Drugsinc/1113179/wickr-sneldenken5555-best-qualty-247/')
+getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
+#leeghalenvanforum('https://www.hotforum.nl/forum/Drugsinc/836350/snuifcoke-bezorg-service-247/')
