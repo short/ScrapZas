@@ -5,7 +5,7 @@ import time
 from os import path
 import codecs
 import csv
-import pandas as pd
+
 
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'}
@@ -56,24 +56,6 @@ def getpageinfo(a):
             print(website)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def leeghalenvanforum(a):
     #hierzo zorgen we ervoor dat we ook de onderliggende pagina's pakken
     for items in range(1000):
@@ -92,12 +74,15 @@ def leeghalenvanforum(a):
         rows = table_body.find_all('tr')
         for row in rows:
             #time.sleep(1)
-            test = row.find_all('td', {"class": "border"})
-            cols = test + row.find_all('td')
-            cols = [x.text.strip() for x in cols]
+            test2 = row.find_all('b', {"class": "onderwerp2"})
+            test3 = test2 + row.find_all('b')
+            test = row.find_all('span', {"class": "border"})
+            cols = test + row.find_all('span')
+            extra = test3 + cols
+            extra = [x.text.strip() for x in extra]
             counter = counter + 1
             if counter > 6 and counter < 36:
-                print(cols)
+                print(extra)
             elif counter > 38:
                 counter = 0
 
@@ -110,6 +95,6 @@ def write_to_doc(berichten):
 
 #write_to_doc(['Sgd', '29-10-19 17:46\n\nLkker'])
 #getpageinfo('https://www.hotforum.nl/forum/Drugsinc/')
-#leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
-getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
+leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
+#getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
 #getaantalonderliggendepaginas('https://www.hotforum.nl/forum/Drugsinc/')
