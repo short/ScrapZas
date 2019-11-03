@@ -5,6 +5,7 @@ import time
 from os import path
 import codecs
 import csv
+import re
 
 
 
@@ -32,7 +33,7 @@ test = session.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', da
 #deze functie werkt nu helemaal. Vraagt alle onderwerpen van het forum aan.
 def getuserlink(link):
     for aantalkeer in range(71):
-        forumlink = link + ('/' + str((aantalkeer*20) + 1))
+        forumlink = link + ('/' + str((aantalkeer*20)))
 
 
         a = requests.get(forumlink, headers=headers)
@@ -41,33 +42,52 @@ def getuserlink(link):
 
         for li in soup.find_all(class_="Visit"):
             print(li.a.get('href'))
-            #getpageinfo(li.a.get('href'))
+            zoekaantalonderwerpen(li.a.get('href'))
 
-def getpageinfo(a):
 
+def zoekaantalonderwerpen(a):
+    website = a
+    lijst = []
     scrape = session.get(a, headers=headers)
     websitecontent = scrape.content
     soup = BeautifulSoup(websitecontent, "html.parser")
-    #print(soup)
 
-    for link in soup.find_all('a'):
-        website = link.get('href')
-        if website.startswith('https://www.hotforum.nl'):
-            print(website)
+    for link in soup.findAll('a'):
+        lijst.append(link.get('href'))
+    dezemoetwordengestript = lijst[6]
+    nummer = re.sub("[^0-9]", "", dezemoetwordengestript)
+    #print(website, nummer)
+    getpageinfo(website, nummer)
+
+def getpageinfo(a, nummer):
+    for aantal in range(int(nummer)):
+        counter = 0
+        websitelink = a + '/p'+ str(aantal + 1)
+        scrape = session.get(websitelink, headers=headers)
+        websitecontent = scrape.content
+        soup = BeautifulSoup(websitecontent, "html.parser")
+
+        for link in soup.find_all('a'):
+            website = link.get('href')
+            if website.startswith('https://www.hotforum.nl'):
+                counter = counter+ 1
+                if counter > 5:
+                    print(website)
+                    time.sleep(4)
+                    leeghalenvanforum(website)
 
 
 def leeghalenvanforum(a):
     #hierzo zorgen we ervoor dat we ook de onderliggende pagina's pakken
-    for items in range(1000):
-
-        print(a)
-        print(str(items + 1))
-        link = a + str(items + 1) + '/'
+    doorgaan = 1
+    teller= 0
+    while doorgaan == 1:
+        teller = teller + 1
+        link = a + str(teller) + '/'
         print(link)
         scrape = session.get(link, headers=headers)
         websitecontent = scrape.content
         soup = BeautifulSoup(websitecontent, "html.parser")
-
         #deze counter wordt gebruikt om alleen de 30 nuttige usernames + het bericht eraf te halen
         counter = 0
         table_body = soup.find('tbody')
@@ -83,29 +103,36 @@ def leeghalenvanforum(a):
             counter = counter + 1
             if counter > 6 and counter < 36:
                 write_to_doc(extra)
+                #print(extra)
+                print(len(extra))
+                if len(extra) == 2:
+                    print("jahoor")
+                    doorgaan = 0
             elif counter > 38:
                 counter = 0
+                if len(extra) == 2:
+                    print("jahoor")
+                    doorgaan = 0
+    print("lekkerstoppen")
 
 
 def write_to_doc(bericht):
     file = 'hotforum.csv'
-    print('weg schrijven van informatie')
+    #print('weg schrijven van informatie')
     if path.exists(file):  # controleert of bestand al bestaat of niet
         with codecs.open(file, 'a', 'utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(bericht)  # voegt nieuwe text van html pagina toe aan csv
-            print('info toevoegen')
+            #print('info toevoegen')
     else:
         with codecs.open(file, 'w', 'utf-8') as f:  # creëert nieuw bestand en maakt header row aan
             writer = csv.writer(f)  # voegt hierbij ook nieuwe text van html pagina toe
             writer.writerow(['username', 'date posted', "message"])
             writer.writerow(bericht)
-            print('nieuw bestand aanmaken')
+            #print('nieuw bestand aanmaken')
 
 
 
-#write_to_doc(['Sgd', '29-10-19 17:46\n\nLkker'])
-#getpageinfo('https://www.hotforum.nl/forum/Drugsinc/')
-leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
+
 #getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
-#getaantalonderliggendepaginas('https://www.hotforum.nl/forum/Drugsinc/')
+leeghalenvanforum('https://www.hotforum.nl/forum/Drugsinc/1113179/wickr-sneldenken5555-best-qualty-247/')
