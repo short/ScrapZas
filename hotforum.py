@@ -7,8 +7,6 @@ import codecs
 import csv
 import pandas as pd
 
-forumlink = "https://www.hotforum.nl/forum-overzicht/Business+en+Finance"
-#geef hier je max bedrag op
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'}
 url = 'https://www.hotforum.nl/forum/index.php?name=Drugsinc&'
@@ -31,9 +29,12 @@ payload = {
 session = requests.Session()
 test = session.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', data=payload)
 
+#deze functie werkt nu helemaal. Vraagt alle onderwerpen van het forum aan.
+def getuserlink(link):
+    for aantalkeer in range(71):
+        forumlink = link + ('/' + str((aantalkeer*20) + 1))
 
-def getuserlink():
-    while True:
+
         a = requests.get(forumlink, headers=headers)
         b = a.content
         soup = BeautifulSoup(b, "html.parser")
@@ -41,12 +42,6 @@ def getuserlink():
         for li in soup.find_all(class_="Visit"):
             print(li.a.get('href'))
             #getpageinfo(li.a.get('href'))
-
-def getaantalonderliggendepaginas(a):
-    test = session.get(a, headers=headers)
-    getaantalpagina = test.content
-    soup = BeautifulSoup(getaantalpagina, 'html.parser')
-
 
 def getpageinfo(a):
 
@@ -115,6 +110,6 @@ def write_to_doc(berichten):
 
 #write_to_doc(['Sgd', '29-10-19 17:46\n\nLkker'])
 #getpageinfo('https://www.hotforum.nl/forum/Drugsinc/')
-leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
-#getuserlink()
+#leeghalenvanforum('https://www.hotforum.nl/forum/Samuelklasse/1124725/afhalen-amsterdambezorgen-eu-cocaine--xtc/')
+getuserlink("https://www.hotforum.nl/forum-overzicht/Business+en+Finance")
 #getaantalonderliggendepaginas('https://www.hotforum.nl/forum/Drugsinc/')
