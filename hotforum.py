@@ -82,14 +82,25 @@ def leeghalenvanforum(a):
             extra = [x.text.strip() for x in extra]
             counter = counter + 1
             if counter > 6 and counter < 36:
-                print(extra)
+                write_to_doc(extra)
             elif counter > 38:
                 counter = 0
 
 
-def write_to_doc(berichten):
-    with open('hotforuminfo.csv', 'w') as csvfile:
-        print()
+def write_to_doc(bericht):
+    file = 'hotforum.csv'
+    print('weg schrijven van informatie')
+    if path.exists(file):  # controleert of bestand al bestaat of niet
+        with codecs.open(file, 'a', 'utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(bericht)  # voegt nieuwe text van html pagina toe aan csv
+            print('info toevoegen')
+    else:
+        with codecs.open(file, 'w', 'utf-8') as f:  # creëert nieuw bestand en maakt header row aan
+            writer = csv.writer(f)  # voegt hierbij ook nieuwe text van html pagina toe
+            writer.writerow(['username', 'date posted', "message"])
+            writer.writerow(bericht)
+            print('nieuw bestand aanmaken')
 
 
 
