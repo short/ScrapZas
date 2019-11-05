@@ -32,8 +32,8 @@ test = session.post('https://www.hotforum.nl/forum/index.php?name=Drugsinc&', da
 
 #deze functie werkt nu helemaal. Vraagt alle onderwerpen van het forum aan.
 def getuserlink(link):
-    for aantalkeer in range(71):
-        forumlink = link + ('/' + str((aantalkeer*20)))
+    for aantalkeer in range(71):#terug naar 71
+        forumlink = link + ('/' + str(((aantalkeer)*20)))#moetnaar1
 
 
         a = requests.get(forumlink, headers=headers)
@@ -54,9 +54,12 @@ def zoekaantalonderwerpen(a):
 
     for link in soup.findAll('a'):
         lijst.append(link.get('href'))
-    dezemoetwordengestript = lijst[6]
-    nummer = re.sub("[^0-9]", "", dezemoetwordengestript)
-    #print(website, nummer)
+    if lijst[6] != '':
+        dezemoetwordengestript = lijst[6]
+        nummer = re.sub("[^0-9]", "", dezemoetwordengestript)
+        #print(website, nummer)
+    else:
+        nummer = 2
     getpageinfo(website, nummer)
 
 def getpageinfo(a, nummer):
@@ -73,7 +76,6 @@ def getpageinfo(a, nummer):
                 counter = counter+ 1
                 if counter > 5:
                     print(website)
-                    time.sleep(4)
                     leeghalenvanforum(website)
 
 
@@ -82,9 +84,10 @@ def leeghalenvanforum(a):
     doorgaan = 1
     teller= 0
     while doorgaan == 1:
+        #print("gaat goed")
         teller = teller + 1
         link = a + '/' + str(teller)
-        print(link)
+        #print(link)
         scrape = session.get(link, headers=headers)
         websitecontent = scrape.content
         soup = BeautifulSoup(websitecontent, "html.parser")
@@ -104,9 +107,10 @@ def leeghalenvanforum(a):
             if counter > 6 and counter < 36:
                 write_to_doc(extra)
                 #print(extra)
-                print(len(extra))
+                #print(len(extra))
                 if len(extra) == 2:
                     doorgaan = 0
+                    #print(doorgaan)
             elif counter > 38:
                 counter = 0
                 if len(extra) == 2:
