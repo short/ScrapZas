@@ -54,7 +54,11 @@ def zoekaantalonderwerpen(a):
 
     for link in soup.findAll('a'):
         lijst.append(link.get('href'))
-    if lijst[6] != '':
+    listlen = len(lijst)
+    print("lijstlengte is " + str(listlen))
+    if listlen <= 6:
+        nummer = listlen - 1
+    elif lijst[6] != '':
         dezemoetwordengestript = lijst[6]
         nummer = re.sub("[^0-9]", "", dezemoetwordengestript)
         #print(website, nummer)
@@ -63,6 +67,11 @@ def zoekaantalonderwerpen(a):
     getpageinfo(website, nummer)
 
 def getpageinfo(a, nummer):
+    print("type = " + str(type(nummer)) + " " + str(nummer))
+
+    if isinstance(nummer, str):
+        nummer = 2
+
     for aantal in range(int(nummer)):
         counter = 0
         websitelink = a + '/p'+ str(aantal + 1)

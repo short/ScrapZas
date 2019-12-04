@@ -91,5 +91,5 @@ class WebScraper:
         scraper1.get_all_html()
 
 
-scraper1 = WebScraper('log.txt')    #aanmaken van scraper
+scraper1 = WebScraper('paginalijst-uniques.txt')    #aanmaken van scraper
 scraper1.run_scraper(scraper1)      #laat de scraper de geselecteerde txt file URLs scrapen

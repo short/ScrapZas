@@ -3,7 +3,7 @@ from collections import Counter
 
 
 def main():
-    with open("paginalijst.txt", 'r') as file:
+    with open("scrape_urls.txt", 'r') as file:
         urllist = list()
         for link in file:
             urllist.append(link)
